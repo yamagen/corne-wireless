@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: zmkfirmware/zmk-build-action@v1
+      - uses: zmkfirmware/zmk-build-action@main
         with:
           shield: corne_left nice_view_adapter
           board: nice_nano_v2
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: zmkfirmware/zmk-build-action@v1
+      - uses: zmkfirmware/zmk-build-action@main
         with:
           shield: corne_right nice_view_adapter
           board: nice_nano_v2
