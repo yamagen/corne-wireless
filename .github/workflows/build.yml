@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v3
@@ -21,17 +22,26 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip ninja-build gperf cmake
+          sudo apt-get install -y python3-pip ninja-build gperf cmake dfu-util
           pip3 install --user west
 
       - name: Initialize West
-        run: west init -l zmk/app
+        run: |
+          mkdir workspace
+          cd workspace
+          west init -l ../zmk/app
 
       - name: Update West modules
-        run: west update
+        run: |
+          cd workspace
+          west update
 
       - name: Build left firmware
-        run: west build -b nice_nano_v2 -- -DSHIELD=corne_left
+        run: |
+          cd workspace
+          west build -b nice_nano_v2 -- -DSHIELD=corne_left
 
       - name: Build right firmware
-        run: west build -b nice_nano_v2 -- -DSHIELD=corne_right
+        run: |
+          cd workspace
+          west build -b nice_nano_v2 -- -DSHIELD=corne_right
