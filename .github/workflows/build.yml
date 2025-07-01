@@ -30,21 +30,24 @@ jobs:
 
       - name: Initialize west
         run: |
-          west init -l .
+          west init workspace
+          cd workspace
           west update
 
       - name: Build Corne Left
         run: |
-          west build -s zmk/app -d build/left -b nice_nano_v2 -- -DSHIELD=corne_left nice_view_adapter
+          cd workspace
+          west build -s ../zmk/app -d build/left -b nice_nano_v2 -- -DSHIELD=corne_left nice_view_adapter
 
       - name: Build Corne Right
         run: |
-          west build -s zmk/app -d build/right -b nice_nano_v2 -- -DSHIELD=corne_right nice_view_adapter
+          cd workspace
+          west build -s ../zmk/app -d build/right -b nice_nano_v2 -- -DSHIELD=corne_right nice_view_adapter
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: firmware
           path: |
-            build/left/zephyr/zmk.uf2
-            build/right/zephyr/zmk.uf2
+            workspace/build/left/zephyr/zmk.uf2
+            workspace/build/right/zephyr/zmk.uf2
