@@ -25,7 +25,7 @@ jobs:
           pip3 install --user west
 
       - name: Initialize West
-        run: west init -l config
+        run: west init -l zmk/app
 
       - name: Update West modules
         run: west update
