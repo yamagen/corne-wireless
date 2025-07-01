@@ -6,20 +6,26 @@ on:
       - main
 
 jobs:
-  build-left:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: zmkfirmware/zmk-build-action@main
-        with:
-          shield: corne_left nice_view_adapter
-          board: nice_nano_v2
+      - name: Checkout user config
+        uses: actions/checkout@v3
 
-  build-right:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: zmkfirmware/zmk-build-action@main
+      - name: Checkout ZMK
+        uses: actions/checkout@v3
         with:
-          shield: corne_right nice_view_adapter
+          repository: zmkfirmware/zmk
+          path: zmk
+
+      - name: Build Corne Left
+        uses: zmkfirmware/zmk/actions/build@main
+        with:
           board: nice_nano_v2
+          shield: corne_left nice_view_adapter
+
+      - name: Build Corne Right
+        uses: zmkfirmware/zmk/actions/build@main
+        with:
+          board: nice_nano_v2
+          shield: corne_right nice_view_adapter
