@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout user config
         uses: actions/checkout@v3
@@ -18,14 +19,32 @@ jobs:
           repository: zmkfirmware/zmk
           path: zmk
 
-      - name: Build Corne Left
-        uses: zmkfirmware/zmk/actions/build@main
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          board: nice_nano_v2
-          shield: corne_left nice_view_adapter
+          python-version: "3.x"
+
+      - name: Install west
+        run: |
+          pip install --upgrade west
+
+      - name: Initialize west
+        run: |
+          west init -l .
+          west update
+
+      - name: Build Corne Left
+        run: |
+          west build -s zmk/app -d build/left -b nice_nano_v2 -- -DSHIELD=corne_left nice_view_adapter
 
       - name: Build Corne Right
-        uses: zmkfirmware/zmk/actions/build@main
+        run: |
+          west build -s zmk/app -d build/right -b nice_nano_v2 -- -DSHIELD=corne_right nice_view_adapter
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          board: nice_nano_v2
-          shield: corne_right nice_view_adapter
+          name: firmware
+          path: |
+            build/left/zephyr/zmk.uf2
+            build/right/zephyr/zmk.uf2
