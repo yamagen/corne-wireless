@@ -8,6 +8,16 @@ AliExpressで**完成品のCorne Wireless（ZMK専用）キーボード**を購�
 
 [AliExpress 商品ページ](https://ja.aliexpress.com/item/1005008684172489.html)
 
+### Github リポジトリ
+
+[GitHub](https://github.com/a741725193/zmk-new_corne):
+
+```
+git clone https://github.com/a741725193/zmk-new_corne
+```
+
+[AliExpress 商品ページ](https://ja.aliexpress.com/item/1005008684172489.html)
+
 ### 主な仕様
 
 - **スイッチ**
